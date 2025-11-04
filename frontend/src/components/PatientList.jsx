@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
@@ -9,7 +9,7 @@ const PatientList = () => {
   }, []);
 
   const fetchPatients = async () => {
-    const response = await axios.get("http://localhost:5000/api/patients");
+    const response = await api.get("/patients");
     setPatients(response.data);
   };
 
