@@ -12,7 +12,32 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// CORS configuration to work across environments (local, Vercel, etc.)
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://healthcare-mern-stack.vercel.app",
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true); // allow non-browser/SSR tools
+    const isAllowed =
+      allowedOrigins.filter(Boolean).includes(origin) || /\.vercel\.app$/.test(origin);
+    if (isAllowed) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: false,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json());
 
 // Routes
