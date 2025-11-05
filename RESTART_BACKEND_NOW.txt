@@ -1,0 +1,48 @@
+⚠️⚠️⚠️ IMPORTANT: YOU MUST RESTART BACKEND SERVER NOW! ⚠️⚠️⚠️
+
+The code has been updated with the message "Doctor is busy at this time"
+BUT the backend server is still running with the OLD code.
+
+═══════════════════════════════════════════════════════════
+
+🔧 HOW TO RESTART BACKEND:
+
+Step 1: Find the terminal where backend is running
+        (Look for the terminal showing "Server running on port 5000")
+
+Step 2: Press Ctrl + C to stop the server
+
+Step 3: Run this command:
+        npm start
+
+Step 4: Wait for "Server running on port 5000" message
+
+═══════════════════════════════════════════════════════════
+
+✅ AFTER RESTARTING:
+
+1. Go to http://localhost:3000
+2. Login to your account
+3. Book a doctor at 5:00 PM (First booking - SUCCESS)
+4. Try to book SAME doctor at 5:00 PM again
+5. You will see: ⚠️ "Doctor is busy at this time"
+
+═══════════════════════════════════════════════════════════
+
+📱 THE MESSAGE WILL APPEAR AS A TOAST NOTIFICATION:
+
+    ┌────────────────────────────────────┐
+    │  ⚠️  Doctor is busy at this time  │
+    │                                [×] │
+    └────────────────────────────────────┘
+
+- Orange/yellow warning color
+- Top-right corner of screen
+- Auto-dismiss after 4 seconds
+
+═══════════════════════════════════════════════════════════
+
+✅ BOTH BACKEND AND FRONTEND ARE UPDATED!
+✅ JUST RESTART BACKEND SERVER TO SEE THE CHANGE!
+
+═══════════════════════════════════════════════════════════
