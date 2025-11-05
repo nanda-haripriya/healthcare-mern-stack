@@ -48,6 +48,21 @@ export const createAppointment = async (req, res) => {
       });
     }
 
+    // Check if doctor already has an appointment at this date and time
+    const existingAppointment = await Appointment.findOne({
+      doctorId,
+      date,
+      time,
+      status: { $in: ["Pending", "Confirmed"] }, // Only check active appointments
+    });
+
+    if (existingAppointment) {
+      return res.status(409).json({
+        success: false,
+        message: `Doctor is not available at this time. Please choose a different time slot.`,
+      });
+    }
+
     // Create appointment
     const appointment = await Appointment.create({
       userId: req.user.id,

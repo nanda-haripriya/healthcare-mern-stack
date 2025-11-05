@@ -22,7 +22,7 @@ const DoctorsPage = () => {
     reason: ''
   });
 
-  const specialties = ['All', 'Cardiologist', 'Orthopedic', 'Neurologist', 'Pediatrician', 'Dermatologist', 'Ophthalmologist'];
+  const specialties = ['All', 'Cardiologist', 'Orthopedic', 'Neurologist', 'Pediatrician', 'Dermatologist', 'Ophthalmologist', 'Gynecologist', 'Psychiatrist', 'Endocrinologist', 'Urologist', 'Radiologist', 'Gastroenterologist', 'Oncologist'];
 
   useEffect(() => {
     fetchDoctors();
@@ -97,13 +97,22 @@ const DoctorsPage = () => {
 
       await appointmentsAPI.createAppointment(appointmentPayload);
       
-      alert('Appointment booked successfully!');
+      alert('✅ Appointment booked successfully!');
       setSelectedDoctor(null);
       setBookingData({ date: '', time: '', reason: '' });
       navigate('/appointments');
     } catch (error) {
       console.error('Booking error:', error);
-      setError(error.response?.data?.message || 'Failed to book appointment. Please try again.');
+      const errorMessage = error.response?.data?.message || 'Failed to book appointment. Please try again.';
+      
+      // Show alert for doctor unavailability
+      if (error.response?.status === 409) {
+        alert('⚠️ ' + errorMessage);
+      } else {
+        alert('❌ ' + errorMessage);
+      }
+      
+      setError(errorMessage);
     } finally {
       setBookingLoading(false);
     }
