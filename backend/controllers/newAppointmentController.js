@@ -71,7 +71,7 @@ export const createAppointment = async (req, res) => {
     if (existingAppointment) {
       return res.status(409).json({
         success: false,
-        message: `Doctor is busy! This appointment slot is already booked by another patient. Please choose a different time slot.`,
+        message: `Doctor is busy at this time`,
       });
     }
 
