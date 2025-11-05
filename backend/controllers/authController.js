@@ -56,6 +56,24 @@ export const signup = async (req, res) => {
     }
   } catch (error) {
     console.error("Signup Error:", error);
+    
+    // Handle validation errors
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        success: false,
+        message: messages.join(', '),
+      });
+    }
+    
+    // Handle duplicate key error
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already exists. Please use a different email.",
+      });
+    }
+    
     res.status(500).json({
       success: false,
       message: error.message || "Server error during signup",

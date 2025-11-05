@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Toast from './Toast';
 import '../styles/Auth.css';
 
 const Signup = () => {
@@ -16,10 +17,15 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
+  };
+
+  const showToast = (message, type) => {
+    setToast({ message, type });
   };
 
   const handleSubmit = async (e) => {
@@ -27,12 +33,16 @@ const Signup = () => {
     setError('');
     
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match!');
+      const errorMsg = 'Passwords do not match!';
+      setError(errorMsg);
+      showToast(errorMsg, 'error');
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      const errorMsg = 'Password must be at least 6 characters long';
+      setError(errorMsg);
+      showToast(errorMsg, 'error');
       return;
     }
 
@@ -49,11 +59,14 @@ const Signup = () => {
     
     if (result.success) {
       setSuccess(true);
+      showToast('Account created successfully!', 'success');
       setTimeout(() => {
         navigate('/doctors');
       }, 1500);
     } else {
-      setError(result.message || 'Signup failed. Please try again.');
+      const errorMsg = result.message || 'Signup failed. Please try again.';
+      setError(errorMsg);
+      showToast(errorMsg, 'error');
     }
   };
 
@@ -63,6 +76,15 @@ const Signup = () => {
       <span className="bg-decoration">⚕️</span>
       <span className="bg-decoration">🏥</span>
       <span className="bg-decoration">💊</span>
+      
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+      
       <div className="auth-card">
         <div className="auth-header">
           <h2>Create Account</h2>

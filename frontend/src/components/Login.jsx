@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Toast from './Toast';
 import '../styles/Auth.css';
 
 const Login = () => {
@@ -12,10 +13,15 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
+  };
+
+  const showToast = (message, type) => {
+    setToast({ message, type });
   };
 
   const handleSubmit = async (e) => {
@@ -28,9 +34,12 @@ const Login = () => {
     setLoading(false);
     
     if (result.success) {
-      navigate('/doctors');
+      showToast('Login successful!', 'success');
+      setTimeout(() => navigate('/doctors'), 1000);
     } else {
-      setError(result.message || 'Login failed. Please try again.');
+      const errorMsg = result.message || 'Login failed. Please try again.';
+      setError(errorMsg);
+      showToast(errorMsg, 'error');
     }
   };
 
@@ -40,6 +49,15 @@ const Login = () => {
       <span className="bg-decoration">⚕️</span>
       <span className="bg-decoration">🏥</span>
       <span className="bg-decoration">💊</span>
+      
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
+      
       <div className="auth-card">
         <div className="auth-header">
           <h2>Welcome Back</h2>
