@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy to Vercel - Healthcare Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+        
+        .status {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .status h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .status ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .status li {
+            color: #2e7d32;
+            margin: 5px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .status li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .deploy-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .deploy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .deploy-button.secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .steps {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .steps h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .steps ol {
+            padding-left: 20px;
+        }
+        
+        .steps li {
+            margin: 10px 0;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .info-box strong {
+            color: #856404;
+        }
+        
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .repo-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .repo-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Deploy Healthcare Management System</h1>
+        <p class="subtitle">Your project is ready to go live on Vercel!</p>
+        
+        <div class="status">
+            <h3>✅ Build Status: SUCCESS</h3>
+            <ul>
+                <li>Frontend built successfully (94.74 kB gzipped)</li>
+                <li>All configuration files created</li>
+                <li>GitHub repository updated</li>
+                <li>Ready for deployment</li>
+            </ul>
+        </div>
+        
+        <div class="button-container">
+            <a href="https://vercel.com/new/clone?repository-url=https://github.com/nanda-haripriya/HealthCare-FULLSTACK&root-directory=frontend&project-name=healthcare-frontend&framework=create-react-app" 
+               class="deploy-button" target="_blank">
+                🚀 Deploy Frontend Now
+            </a>
+            
+            <a href="https://vercel.com/new/clone?repository-url=https://github.com/nanda-haripriya/HealthCare-FULLSTACK&root-directory=backend&project-name=healthcare-backend" 
+               class="deploy-button secondary" target="_blank">
+                🔧 Deploy Backend
+            </a>
+        </div>
+        
+        <div class="steps">
+            <h3>📋 Quick Deployment Steps:</h3>
+            <ol>
+                <li><strong>Click "Deploy Frontend Now"</strong> button above</li>
+                <li>Login to Vercel (with GitHub recommended)</li>
+                <li>Vercel will auto-detect settings</li>
+                <li>Add environment variable:
+                    <ul>
+                        <li><code>REACT_APP_API_BASE_URL</code> = <code>http://localhost:5000/api</code></li>
+                    </ul>
+                </li>
+                <li>Click "Deploy" and wait 3-5 minutes</li>
+                <li>Your app will be live! 🎉</li>
+            </ol>
+        </div>
+        
+        <div class="info-box">
+            <strong>⚠️ Important:</strong> After deploying frontend, deploy the backend using the "Deploy Backend" button. Then update the frontend's <code>REACT_APP_API_BASE_URL</code> environment variable with your backend URL.
+        </div>
+        
+        <div class="steps">
+            <h3>🔐 Environment Variables Needed:</h3>
+            
+            <h4 style="margin-top: 15px;">Frontend:</h4>
+            <ul>
+                <li><code>REACT_APP_API_BASE_URL</code> - Your backend API URL</li>
+            </ul>
+            
+            <h4 style="margin-top: 15px;">Backend:</h4>
+            <ul>
+                <li><code>MONGO_URI</code> - Your MongoDB connection string</li>
+                <li><code>JWT_SECRET</code> - Your JWT secret key</li>
+                <li><code>PORT</code> - 5000</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px; color: #666;">
+            <p>GitHub Repository: 
+                <a href="https://github.com/nanda-haripriya/HealthCare-FULLSTACK" 
+                   class="repo-link" target="_blank">
+                    nanda-haripriya/HealthCare-FULLSTACK
+                </a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
