@@ -4,6 +4,23 @@ A modern, full-featured healthcare management system built with the MERN stack (
 
 ## ✨ Features
 
+### 🚫 **Double-Booking Prevention** ⭐ NEW
+- Smart appointment conflict detection
+- Prevents booking the same doctor at the same time
+- Real-time availability checking
+- Clear warning messages for unavailable slots
+
+### 🔔 **Toast Notification System** ⭐ NEW
+- Beautiful slide-in notifications
+- Success, Error, Warning, and Info types
+- Auto-dismiss with manual close option
+- Replaces all basic alerts for better UX
+
+### 📅 **Date Validation** ⭐ NEW
+- Prevents booking appointments in the past
+- Automatic date validation on frontend and backend
+- User-friendly error messages
+
 ### 🎨 Modern UI/UX
 - **Full-screen responsive design** optimized for all devices
 - **Beautiful gradient themes** with distinct color schemes for each section:
