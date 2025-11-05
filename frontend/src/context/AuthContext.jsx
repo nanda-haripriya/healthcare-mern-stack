@@ -38,7 +38,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
+      console.log('Attempting login with email:', email);
       const response = await authAPI.login({ email, password });
+      console.log('Login response:', response);
       
       if (response.success) {
         const { token: newToken, ...userData } = response.data;
@@ -48,17 +50,25 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(userData));
         return { success: true };
       }
-    } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || 'Login failed',
+        message: response.message || 'Login failed',
+      };
+    } catch (error) {
+      console.error('Login error:', error);
+      console.error('Error response:', error.response);
+      return {
+        success: false,
+        message: error.response?.data?.message || error.message || 'Login failed. Please check if backend server is running.',
       };
     }
   };
 
   const signup = async (userData) => {
     try {
+      console.log('Attempting signup with:', { ...userData, password: '***' });
       const response = await authAPI.signup(userData);
+      console.log('Signup response:', response);
       
       if (response.success) {
         const { token: newToken, ...user } = response.data;
@@ -68,10 +78,16 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(user));
         return { success: true };
       }
-    } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || 'Signup failed',
+        message: response.message || 'Signup failed',
+      };
+    } catch (error) {
+      console.error('Signup error:', error);
+      console.error('Error response:', error.response);
+      return {
+        success: false,
+        message: error.response?.data?.message || error.message || 'Signup failed. Please check if backend server is running.',
       };
     }
   };
