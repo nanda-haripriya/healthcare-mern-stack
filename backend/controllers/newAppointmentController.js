@@ -39,6 +39,18 @@ export const createAppointment = async (req, res) => {
       });
     }
 
+    // Validate date is not in the past
+    const appointmentDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (appointmentDate < today) {
+      return res.status(400).json({
+        success: false,
+        message: "Cannot book appointments for past dates",
+      });
+    }
+
     // Check if doctor exists
     const doctor = await Doctor.findById(doctorId);
     if (!doctor) {

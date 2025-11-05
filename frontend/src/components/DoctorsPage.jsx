@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import Toast from './Toast';
 import { doctorsAPI, appointmentsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Doctors.css';
@@ -16,6 +17,7 @@ const DoctorsPage = () => {
   const [loading, setLoading] = useState(true);
   const [bookingLoading, setBookingLoading] = useState(false);
   const [error, setError] = useState('');
+  const [toast, setToast] = useState(null);
   const [bookingData, setBookingData] = useState({
     date: '',
     time: '',
@@ -63,21 +65,27 @@ const DoctorsPage = () => {
     setFilteredDoctors(filtered);
   };
 
+  const showToast = (message, type) => {
+    setToast({ message, type });
+  };
+
   const handleBooking = (doctor) => {
     if (!isAuthenticated) {
-      alert('Please login to book an appointment!');
-      navigate('/login');
+      showToast('Please login to book an appointment!', 'warning');
+      setTimeout(() => navigate('/login'), 1500);
       return;
     }
     setSelectedDoctor(doctor);
     setBookingData({ date: '', time: '', reason: '' });
+    setError('');
   };
 
   const handleSubmitBooking = async (e) => {
     e.preventDefault();
     
     if (!bookingData.date || !bookingData.time || !bookingData.reason) {
-      alert('Please fill all fields!');
+      setError('Please fill all fields!');
+      showToast('Please fill all required fields!', 'warning');
       return;
     }
 
@@ -97,19 +105,19 @@ const DoctorsPage = () => {
 
       await appointmentsAPI.createAppointment(appointmentPayload);
       
-      alert('✅ Appointment booked successfully!');
+      showToast('Appointment booked successfully!', 'success');
       setSelectedDoctor(null);
       setBookingData({ date: '', time: '', reason: '' });
-      navigate('/appointments');
+      setTimeout(() => navigate('/appointments'), 1500);
     } catch (error) {
       console.error('Booking error:', error);
       const errorMessage = error.response?.data?.message || 'Failed to book appointment. Please try again.';
       
-      // Show alert for doctor unavailability
+      // Show toast for doctor unavailability
       if (error.response?.status === 409) {
-        alert('⚠️ ' + errorMessage);
+        showToast(errorMessage, 'warning');
       } else {
-        alert('❌ ' + errorMessage);
+        showToast(errorMessage, 'error');
       }
       
       setError(errorMessage);
@@ -133,6 +141,14 @@ const DoctorsPage = () => {
   return (
     <div className="doctors-page">
       <Navbar />
+      
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       
       <div className="doctors-container">
         <div className="doctors-header">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import Toast from './Toast';
 import { appointmentsAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import '../styles/Appointments.css';
@@ -12,6 +13,7 @@ const AppointmentsPage = () => {
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -43,18 +45,22 @@ const AppointmentsPage = () => {
     return app.status === filter;
   });
 
+  const showToast = (message, type) => {
+    setToast({ message, type });
+  };
+
   const cancelAppointment = async (id) => {
     if (window.confirm('Are you sure you want to cancel this appointment?')) {
       try {
         const response = await appointmentsAPI.cancelAppointment(id);
         
         if (response.success) {
-          alert('Appointment cancelled successfully');
+          showToast('Appointment cancelled successfully', 'success');
           loadAppointments();
         }
       } catch (error) {
         console.error('Error cancelling appointment:', error);
-        alert(error.response?.data?.message || 'Failed to cancel appointment');
+        showToast(error.response?.data?.message || 'Failed to cancel appointment', 'error');
       }
     }
   };
@@ -89,6 +95,14 @@ const AppointmentsPage = () => {
   return (
     <div className="appointments-page">
       <Navbar />
+      
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
       
       <div className="appointments-container">
         <div className="appointments-header">
