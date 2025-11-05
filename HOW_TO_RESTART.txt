@@ -1,0 +1,70 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   ⚠️  BACKEND SERVER MUST BE RESTARTED FOR CHANGES TO WORK  ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+The code has been changed to show "Doctor is busy at this time"
+BUT the server is still running the OLD code in memory.
+
+═══════════════════════════════════════════════════════════════
+
+🔧 OPTION 1: DOUBLE-CLICK THE BATCH FILE
+
+   1. Find file: RESTART_BACKEND.bat
+   2. Double-click it
+   3. It will restart the server automatically
+
+═══════════════════════════════════════════════════════════════
+
+🔧 OPTION 2: MANUAL RESTART
+
+   1. Find the terminal running backend (shows "Server running on port 5000")
+   2. Press Ctrl + C to stop it
+   3. Type: npm start
+   4. Press Enter
+
+═══════════════════════════════════════════════════════════════
+
+🔧 OPTION 3: KILL AND RESTART
+
+   1. Open Task Manager (Ctrl + Shift + Esc)
+   2. Find "Node.js" processes
+   3. End all Node.js tasks
+   4. Open new terminal in backend folder
+   5. Run: npm start
+
+═══════════════════════════════════════════════════════════════
+
+✅ AFTER RESTARTING, TEST:
+
+   1. Open: http://localhost:3000
+   2. Login to your account
+   3. Go to Doctors page
+   4. Book Dr. Sarah Johnson at 5:00 PM → SUCCESS ✅
+   5. Try to book SAME doctor at 5:00 PM again
+   6. You will see toast: "⚠️ Doctor is busy at this time"
+
+═══════════════════════════════════════════════════════════════
+
+📱 THE TOAST WILL LOOK LIKE THIS:
+
+    ┌────────────────────────────────────┐
+    │  ⚠️  Doctor is busy at this time  │
+    │                                [×] │
+    └────────────────────────────────────┘
+
+   - Orange/yellow warning color
+   - Top-right corner of screen
+   - Auto-dismiss after 4 seconds
+
+═══════════════════════════════════════════════════════════════
+
+✅ CODE IS ALREADY UPDATED IN:
+   - Backend: newAppointmentController.js ✅
+   - Frontend: DoctorsPage.jsx ✅
+   - GitHub: All changes pushed ✅
+
+⚠️ ONLY THING NEEDED: RESTART BACKEND SERVER!
+
+═══════════════════════════════════════════════════════════════
